@@ -1,0 +1,4 @@
+{
+    "mongoURI": "mongodb+srv://Shahzaib67:shahzaib123@cluster0.riuw9.mongodb.net/notesDB?retryWrites=true&w=majority",
+    "SecretKey":"Secret"
+}
