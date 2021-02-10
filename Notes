@@ -1,0 +1,5 @@
+concurrently: pakage will use to run React js and Express js with Single Command on different Ports...
+
+npm install axios react-router-dom uuid react-transition-group
+
+racf shortcut for react syntax
