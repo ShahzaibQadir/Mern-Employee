@@ -5,9 +5,17 @@ const config = require('config');
 const bcrypt = require('bcryptjs');
 const {check,validationResult} = require('express-validator/check');
 const UserModel = require('../models/UserModel');
+const auth = require('../middlewares/auth');
+const { selectFields } = require('express-validator/src/select-fields');
 
-router.get('/',(req,res) =>{
-    res.send('Get Logged in user');
+router.get('/',auth, async(req,res)=>{
+    try {
+        const user = await (await UserModel.findById(req.user.id).select('-password')); 
+        res.json(user);
+    } catch (error) {
+        console.log(error.message);
+        res.status(500).send(); 
+    }
 });
 
 router.post('/',[

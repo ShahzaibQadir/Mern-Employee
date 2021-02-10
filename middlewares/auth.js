@@ -8,12 +8,11 @@ module.exports = function(req,res,next ){
          return res.status(401).json({msg: 'No token found....'});
      }
      try{
-         const decodetoken = jwt.verify(token,config.get('Secret'));
+         const decodetoken = jwt.verify(token,config.get('SecretKey'));
          req.user = decodetoken.user;
          next();
      }
      catch(err){
-        return res.status(401).json({msg: 'Token is Invalid'});
-
+        res.status(401).json({msg: 'Token is Invalid'});
      }
 }
