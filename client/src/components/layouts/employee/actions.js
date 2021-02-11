@@ -6,3 +6,4 @@ export const FILTER_EMP =     "FILTER_EMP      ";
 export const CLEAR_FILTER_EMP="CLEAR_FILTER_EMP";
 export const SET_ALERT       ="SET_ALERT       ";
 export const CLEAR_ALERT     ="CLEAR_ALERT     ";
+export const CLEAR_CURRENT_EMP = " CLEAR_CURRENT_EMP ";

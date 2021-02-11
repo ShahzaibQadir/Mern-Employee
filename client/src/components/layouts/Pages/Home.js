@@ -1,15 +1,18 @@
 import React from 'react'
 import AllEmployee from '../AllEmployee'
+import EmployeeForm from '../EmployeeForm';
 
 const Home = () => {
     return (
         <div className="container">
-            <div className="col-sm-9">
+            <div className='row'>
+            <div className="col-sm-8">
                 <AllEmployee></AllEmployee>
             </div>
-            <div className="col-sm-2">
-                <p>Form will display here</p>
+            <div className="col-sm-4">
+                <EmployeeForm></EmployeeForm>
             </div>
+        </div>
         </div>
     )
 }
