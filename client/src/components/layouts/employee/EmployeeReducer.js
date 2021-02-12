@@ -39,7 +39,23 @@ export default (state,action) =>{
             return{
                 ...state,
                 employee: state.employees.map(employee => employee.id === action.payload.id ? action.payload : employee)  
-            } 
+            };
+        case FILTER_EMP:
+            return{
+                ...state,
+                filtered: state.employees.filter(employee =>{
+                    const regex = new RegExp(`${action.payload}`,'gi');
+                    return ( employee.name.match(regex) ||
+                     employee.email.match(regex) ||
+                      employee.designation.match(regex)
+                    );
+                })
+            };
+        case CLEAR_FILTER_EMP:
+            return{
+                 ...state,
+                 filtered: null
+            }; 
         default:
             return state;
     }
