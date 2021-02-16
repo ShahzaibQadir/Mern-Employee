@@ -5,10 +5,11 @@ import {
     SET_CURRENT,     
     CLEAR_CURRENT_EMP,
     FILTER_EMP,      
-     CLEAR_FILTER_EMP,
+    CLEAR_FILTER_EMP,
     SET_ALERT,       
     CLEAR_ALERT,     
-    SET_CURRENT_EMP
+    SET_CURRENT_EMP,
+    GET_EMP
 } from './actions';
 
 export default (state,action) =>{
@@ -16,7 +17,14 @@ export default (state,action) =>{
         case ADD_EMP:
             return{
                 ...state,
-                employees: [...state.employees, action.payload]
+                employees: [...state.employees, action.payload],
+                loading: false
+            };
+        case GET_EMP:
+            return{
+                ...state,
+                employee: action.payload,
+                loading : false
             };
         case DELETE_EMP:
         return{
@@ -38,7 +46,8 @@ export default (state,action) =>{
         case UPDATE_EMP:
             return{
                 ...state,
-                employee: state.employees.map(employee => employee.id === action.payload.id ? action.payload : employee)  
+                employee: state.employees.map(employee => employee.id === action.payload.id ? action.payload : employee),
+                loading:false  
             };
         case FILTER_EMP:
             return{

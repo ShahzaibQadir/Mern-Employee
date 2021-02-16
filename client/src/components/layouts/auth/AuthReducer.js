@@ -11,6 +11,7 @@ import {
     export default (state, action)=>{
         switch (action.type) {
             case REGISTER_USER:
+            case LOGIN_USER:
                 localStorage.setItem('token',action.payload.token);
             return{
                 ...state,
@@ -19,6 +20,8 @@ import {
                 loading: false
             };
             case REGISTRATION_FAILED:
+            case LOGIN_FAILED:
+            case LOGOUT:   
                 localStorage.setItem('token',action.payload.token);
             return{
                 ...state,
@@ -28,18 +31,19 @@ import {
                 user:null,
                 error: action.payload
             };
-            case LOAD_USER:
+        
+            case LOAD_USER: 
                 localStorage.setItem('token',action.payload.token);
             return{
                 ...state,
                 token: null,
-                isAuthenticated:false,
+                 isAuthenticated:true,
                 loading: false,
                 user:null,
                 error: action.payload
             };
-            default:[
-                ...state
-            ]
+            default:
+            return {...state};
+            
         }
     }

@@ -1,10 +1,17 @@
-import React,{useState, useContext} from 'react'
+import React,{useState, useContext, useEffect} from 'react'
 import AuthContext from './auth/AuthContext';
 
-const Register = () => {
-    const authcontext= useContext(AuthContext);
+const Register = props => {
+ const authcontext= useContext(AuthContext);
 
-    const { registeruser } =authcontext;
+    const { registeruser, isAuthenticated } =authcontext;
+
+    useEffect(()=>{
+        if (isAuthenticated) {
+            props.history.push('/');
+        }
+    }, [isAuthenticated,props.history]); 
+
     const [user ,setuser]= useState({
           name:'',
           email:'',

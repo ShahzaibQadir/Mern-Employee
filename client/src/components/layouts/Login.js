@@ -1,8 +1,19 @@
-import React,{useState} from 'react'
+import React,{useState,useContext,useEffect} from 'react'
+import AuthContext from './auth/AuthContext';
 
-const Login = () => {
+const Login = props => {
+    const authcontext= useContext(AuthContext);
+
+    const { loginuser, isAuthenticated } =authcontext;
+
+    useEffect(()=>{
+        if (isAuthenticated) {
+            props.history.push('/');
+      }
+    }, [isAuthenticated,props.history]); 
+
     const [user ,setuser]= useState({
-         
+          
           email:'',
           password:'',
          
@@ -17,10 +28,13 @@ const Login = () => {
     });
     const onSubmit = e => {
         e.preventDefault();
-        console.log('User Registered Now');
+        loginuser({
+            email,
+            password
+        });
     };
 
- return   (
+ return (
         <form onSubmit={onSubmit}> 
             <div className="row">
                 <div className="col-sm-6" style={{marginLeft:'4%',marginTop:'5%'}}>
@@ -30,6 +44,7 @@ const Login = () => {
             <div className="mb-3">
             <label>Enter Email</label>
             <input className="form-control" type="email" name="email" value={email}
+            required
             onChange={onChange}/>
             </div>
 
@@ -37,6 +52,7 @@ const Login = () => {
             <div className="mb-3">
            <label>Enter Password</label>
             <input className="form-control" type="password" name="password" value={password}
+            required
             onChange={onChange}/>
             </div>
             

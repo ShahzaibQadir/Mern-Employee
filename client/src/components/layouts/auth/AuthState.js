@@ -1,6 +1,7 @@
 import React ,{useReducer} from 'react';
 import AuthContext from './AuthContext';
 import AuthReducer from './AuthReducer';
+import AuthToken from './tokenAuth';
 import axios from 'axios';
 import {
 REGISTER_USER,        
@@ -23,13 +24,17 @@ const AuthState = props => {
     const [state,dispatch]=useReducer(AuthReducer,initialState);
 
     /*Load User Account*/
-    const loadUser = async () =>{
+    const loadUser = async () =>{ 
+        if (localStorage.token) {
+            AuthToken(localStorage.token);
+        }
         try {
             const res = await axios.get('/api/auth');
             dispatch({
                 type: LOAD_USER,
                 payload:res.data
-            })
+            });
+            loadUser();
          } catch (err) {
            dispatch({ type: AUTH_ERROR }); 
         }
@@ -51,10 +56,40 @@ const AuthState = props => {
         }catch(err){
            dispatch({
             type:REGISTRATION_FAILED,
-            payload:err.response.data.msg;    
+            payload:err.response.data.msg   
            });
         }
     };
+
+
+
+   /*Login User */
+   const loginuser = async formData =>{
+    const config ={
+        header:{
+            'Context-Type':'application/json'
+        } 
+    };
+    try{
+        const res = await axios.post('/api/auth',formData,config);
+        dispatch({
+            type: LOGIN_USER,
+            payload: res.data
+        });
+    }catch(err){
+       dispatch({
+        type:LOGIN_FAILED,
+        payload:err.response.data.msg   
+       });
+    }
+};
+
+
+const logout=() =>{
+    dispatch({type:LOGOUT});
+};
+
+
    return(
        <AuthContext.Provider value={{
            token: state.token,
@@ -62,7 +97,10 @@ const AuthState = props => {
            loading: state.loading,
            user:state.user,
            error: state.error,
-           registeruser
+           registeruser,
+           loadUser,
+           loginuser,
+           logout
        }}> 
        {props.children}
        </AuthContext.Provider>
